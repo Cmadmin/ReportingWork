@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Windows.Forms;
 using System.Drawing;
+using Services.Infrastructure;
 
 namespace Services.Implementation
 {
-    public class QueryInterfaceBuilder
+    public class QueryInterfaceBuilder : IQueryInterfaceBuilder
     {
         public Label MakeLabel(string text, bool autosize, Point position)
         {
@@ -47,6 +44,44 @@ namespace Services.Implementation
             {
                 ToolTipTitle = "Help Text",
                 UseAnimation = true
+            };
+        }
+
+        public Control QueryForMatch(string labelText)
+        {
+            var label = new Label();
+            label.Text = labelText;
+            label.AutoSize = true;
+
+            return new Panel
+            {
+                Controls = { label, new TextBox() }
+
+            };
+        }
+
+        public Control QueryForSimpleMatch()
+        {
+            var box = new TextBox();
+            box.Visible = true;
+            box.Location = new Point(10, 20);
+
+            return box;
+        }
+
+        public Control QueryForRange(string startLabel, string endLabel)
+        {
+            return new Panel
+            {   
+                Controls = { QueryForMatch(startLabel), QueryForMatch(endLabel) }
+            };
+        }
+
+        public Panel QueryForRange()
+        {
+            return new Panel
+            {
+                Controls = { QueryForMatch(""), QueryForMatch(" And ") }
             };
         }
 

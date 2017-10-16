@@ -47,6 +47,7 @@
     <Compile Include="Implementation\QueryInterfaceBuilder.cs" />
     <Compile Include="Implementation\ReportProcessor.cs" />
     <Compile Include="Implementation\SqlGenerator.cs" />
+    <Compile Include="Infrastructure\IQueryInterfaceBuilder.cs" />
     <Compile Include="Model\ColumnClue.cs" />
     <Compile Include="Model\Report.cs" />
     <Compile Include="Model\ReportBlock.cs" />
@@ -60,7 +61,6 @@
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Infrastructure\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

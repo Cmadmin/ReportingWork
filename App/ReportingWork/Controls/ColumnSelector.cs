@@ -1,6 +1,8 @@
 ﻿using Common.Enums;
 using Common.Model;
 using ReportingWork.Data.Infrastructure;
+using Services.Implementation;
+using Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,6 +21,7 @@ namespace ReportingWork.Controls
         private List<TableDto> _columnDetails;
         private IQueryFunctions _queryFunction;
         private Label _labelDetails = new Label();
+        private IQueryInterfaceBuilder _interfaceBuilder;
 
         public List<QueryOperator> Operators = new List<QueryOperator>
         {
@@ -29,6 +32,8 @@ namespace ReportingWork.Controls
             new QueryOperator {Identifier = Operator.TrueOrFalse, Name = "TrueOrFalse", Symbol = "Is", Description = "Only records matching your selection will be returned."},
             new QueryOperator {Identifier = Operator.Between, Name = "Between", Symbol = "Between", Description = "Only records that are in the range specified in the input boxes will be returned."}
         };
+
+        public IQueryInterfaceBuilder InterfaceBuilder { get{    return _interfaceBuilder == null?  new QueryInterfaceBuilder() : _interfaceBuilder;  } }
 
         public ColumnSelector(Form1 parent, List<string> selectedTables)
         {
@@ -189,6 +194,7 @@ namespace ReportingWork.Controls
             tabProperties.Controls.Clear();
             tabProperties.Controls.Add(control, 0, 0);
 
+
             return;
 
             //testing
@@ -254,11 +260,11 @@ namespace ReportingWork.Controls
                 }
                 else if(op.Identifier == Operator.Between)
                 {
-                    temppanel = QueryForRange();
+                    temppanel = InterfaceBuilder.QueryForRange();
                 }
                 else
                 {
-                    temppanel = QueryForSimpleMatch();
+                    temppanel = InterfaceBuilder.QueryForSimpleMatch();
                 }
 
                 tabProperties.Controls.Add(temppanel);
@@ -272,48 +278,7 @@ namespace ReportingWork.Controls
             }
 
             return comboSelect;
-        }
-
-       
-  
-
-        private Control QueryForMatch(string labelText)
-        {
-            var label = new Label();
-            label.Text = labelText;
-            label.AutoSize = true;
-
-            return new Panel
-            {
-                Controls = { label, new TextBox() }
-                
-            };
-        }
-
-        private Control QueryForSimpleMatch()
-        {
-            var box = new TextBox();
-            box.Visible = true;
-            box.Location = new Point(10, 20);
-
-            return box;
-        }
-
-        private Control QueryForRange(string startLabel, string endLabel)
-        {
-            return new Panel
-            {
-                Controls = { QueryForMatch(startLabel), QueryForMatch(endLabel)}
-            };
-        }
-
-        private Panel QueryForRange()
-        {
-            return new Panel
-            {
-                Controls = { QueryForMatch(""), QueryForMatch(" And ") }
-            };
-        }
+        }    
 
         private Panel QueryForBoolean(string trueString, string falseString)
         {

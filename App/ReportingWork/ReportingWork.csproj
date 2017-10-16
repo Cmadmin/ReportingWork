@@ -114,6 +114,10 @@
       <Project>{84b204ab-a956-4b11-8763-e926c2f28348}</Project>
       <Name>ReportingWork.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{6D088817-60B2-4165-809D-CE86C7B63CE8}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
     <ProjectReference Include="Common\Common.csproj">
       <Project>{b4973b47-eba9-44df-bdff-81e8be2e8c60}</Project>
       <Name>Common</Name>
